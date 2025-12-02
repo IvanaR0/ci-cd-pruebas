@@ -10,7 +10,7 @@ jobs:
 
     steps:
     - name: Checkout del repositorio
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
     
     - name: Configurar Python
       uses: actions/setup-python@v4
@@ -27,19 +27,9 @@ jobs:
       run: |
         echo "<h1>Despliegue exitoso</h1>" > index.html
         echo "<p>Las pruebas pasaron correctamente.</p>" >> index.html
-        echo "<p>Reporte de cobertura:</p>" >> index.html
-        echo "<ul>" >> index.html
-        echo "<li><a href='coverage/index.html'>Ver cobertura de tests</a></li>" >> index.html
-        echo "</ul>" >> index.html
-    
-    - name: Generar reporte de cobertura
-      run: |
-        pip install coverage
-        python -m coverage run -m pytest
-        python -m coverage html -d coverage
     
     - name: Subir a GitHub Pages
-      uses: actions/upload-pages-artifact@v2
+      uses: actions/upload-pages-artifact@v3
       with:
         path: .
 
@@ -50,11 +40,8 @@ jobs:
     permissions:
       pages: write
       id-token: write
-    
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  
     
     steps:
     - name: Deploy a GitHub Pages
-      uses: actions/deploy-pages@v2
+      uses: actions/deploy-pages@v4
